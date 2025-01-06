@@ -172,7 +172,8 @@ def run(config: GenerateConfig):
     return outputs
 
 
-def main(config: GenerateConfig):
+def main():
+    config = GenerateConfig.load()
     output_dir = Path(config.output_dir)
     if output_dir.exists():
         raise ValueError(f'output_dir already exists: "{output_dir}"')
@@ -185,5 +186,4 @@ def main(config: GenerateConfig):
 
 
 if __name__ == '__main__':
-    config = GenerateConfig.load()
-    main(config)
+    main()

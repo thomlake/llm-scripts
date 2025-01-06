@@ -88,3 +88,11 @@ with safe_open('./runs/wiki-10k-3shot/llama-3-censor-min_conf_em-7/checkpoint-19
 print(f'{sum(v.numel() for v in tensors.values()):,d}')
 # Output: 1,079,115,776
 ```
+
+```
+accelerate launch run.py sft --train_file ../data/siqa/sft-train/train-1k/llama-3-8b-instruct--choices-5--train.jsonl --eval_file ../data/siqa/sft-train/train-1k/llama-3-8b-instruct--choices-5--eval.jsonl --output_dir ./runs/choices-5-01 --pad_token "<|end_of_text|>" --model_id meta-llama/Meta-Llama-3.1-8B-Instruct
+```
+
+```
+python run_script.py generate --input_file ./qampari-small.jsonl --output_dir qampari-small-output --model_id meta-llama/Meta-Llama-3.1-8B-Instruct
+```
