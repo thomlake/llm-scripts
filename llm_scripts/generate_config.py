@@ -22,7 +22,6 @@ class GenerateConfig(Config):
     checkpoint_dir: str | None = None
     chat_template: str | None = None
     chat_template_file: str | None = None
-    special_tokens_to_add: list[str] | None = None
     special_tokens_to_add_json: str | None = None
     pad_to_multiple_of: int = 16
     add_generation_prompt: bool = True
@@ -34,7 +33,6 @@ class GenerateConfig(Config):
     repetition_penalty: float | None = None
     eos_token: str | None = None
     pad_token: str | None = None
-    stop_strings: str | list[str] | None = None
     stop_strings_json: str | None = None
     num_return_sequences: int = 1
     output_attentions: bool = False
@@ -54,6 +52,20 @@ class GenerateConfig(Config):
 
         if self.stop_strings_json is not None:
             self.stop_strings = json.loads(self.stop_strings_json)
+
+    @property
+    def special_tokens_to_add(self) -> dict[str, str]:
+        if not self.special_tokens_to_add_json:
+            return {}
+
+        return json.loads(self.special_tokens_to_add_json)
+
+    @property
+    def stop_strings(self) -> list[str]:
+        if not self.stop_strings_json:
+            return []
+
+        return json.loads(self.stop_strings_json)
 
     @property
     def output_keys_to_keep(self):
