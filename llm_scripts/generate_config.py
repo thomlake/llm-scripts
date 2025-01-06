@@ -63,7 +63,7 @@ class GenerateConfig(Config):
     @property
     def stop_strings(self) -> list[str]:
         if not self.stop_strings_json:
-            return []
+            return None
 
         return json.loads(self.stop_strings_json)
 
