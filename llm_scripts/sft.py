@@ -108,15 +108,15 @@ def preprocess_dataset(
 
 
 def load_dataset(config: SFTConfig, tokenizer: PreTrainedTokenizerBase):
-    train_dataset = datasets.load_dataset(
+    splits = {}
+    splits['train'] = datasets.load_dataset(
         'json',
         split='train',
         data_files=config.train_file,
     )
 
-    eval_dataset = None
     if config.eval_file:
-        eval_dataset = datasets.load_dataset(
+        splits['eval'] = datasets.load_dataset(
             'json',
             split='train',
             data_files=config.eval_file,
@@ -126,21 +126,23 @@ def load_dataset(config: SFTConfig, tokenizer: PreTrainedTokenizerBase):
         if test_size > 1:
             test_size = int(test_size)
 
-        splits = train_dataset.train_test_split(test_size=test_size, shuffle=False)
-        train_dataset = splits['train']
-        eval_dataset = splits['test']
+        new_splits = splits['train'].train_test_split(test_size=test_size, shuffle=False)
+        splits = {
+            'train': new_splits['train'],
+            'eval': new_splits['test'],
+        }
 
-    train_dataset = preprocess_dataset(config, train_dataset, tokenizer=tokenizer)
-    if eval_dataset is not None:
-        eval_dataset = preprocess_dataset(config, eval_dataset, tokenizer=tokenizer)
+    splits_preprocessed = {}
+    for k, data in splits.items():
+        splits_preprocessed[k] = preprocess_dataset(config, data, tokenizer=tokenizer)
 
-    dataset = {'train': train_dataset, 'eval': eval_dataset}
+    splits_preprocessed['eval'] = splits_preprocessed.get('eval', None)
     if env.is_primary():
-        for k, v in dataset.items():
+        for k, v in splits_preprocessed.items():
             v = v or []
             print(f'number of {k} instances:', len(v))
 
-    return dataset
+    return splits_preprocessed
 
 
 def train(config: SFTConfig):

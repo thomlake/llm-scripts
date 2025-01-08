@@ -90,9 +90,9 @@ print(f'{sum(v.numel() for v in tensors.values()):,d}')
 ```
 
 ```
-accelerate launch run.py sft --train_file ../data/siqa/sft-train/train-1k/llama-3-8b-instruct--choices-5--train.jsonl --eval_file ../data/siqa/sft-train/train-1k/llama-3-8b-instruct--choices-5--eval.jsonl --output_dir ./runs/choices-5-01 --pad_token "<|end_of_text|>" --model_id meta-llama/Meta-Llama-3.1-8B-Instruct
+accelerate launch run.py sft --train_file ../data/siqa/sft-train/train-1k/llama-3-8b-instruct--choices-5--train.jsonl --eval_file ../data/siqa/sft-train/train-1k/llama-3-8b-instruct--choices-5--eval.jsonl --output_dir ../runs-sft/choices-5-02 --pad_token "<|end_of_text|>" --model_id meta-llama/Meta-Llama-3.1-8B-Instruct --eval_steps 10 --num_train_epochs 4
 ```
 
 ```
-python run_script.py generate --input_file ./qampari-small.jsonl --output_dir qampari-small-output --model_id meta-llama/Meta-Llama-3.1-8B-Instruct
+python run.py generate --input_file ./qampari-small.jsonl --output_dir qampari-small-output --model_id meta-llama/Meta-Llama-3.1-8B-Instruct --pad_token "<|end_of_text|>" --checkpoint_dir ../runs-sft/choices-5-01
 ```
