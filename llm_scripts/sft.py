@@ -211,7 +211,7 @@ def train(config: SFTConfig):
         per_device_eval_batch_size=config.per_device_eval_batch_size,
         auto_find_batch_size=config.auto_find_batch_size,
         group_by_length=config.group_by_length,
-        evaluation_strategy=config.evaluation_strategy,
+        eval_strategy=config.eval_strategy,
         eval_steps=config.eval_steps,
         save_strategy=config.save_strategy,
         save_steps=config.save_steps,
