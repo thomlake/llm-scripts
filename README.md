@@ -90,7 +90,7 @@ print(f'{sum(v.numel() for v in tensors.values()):,d}')
 ```
 
 ```
-accelerate launch run.py sft --train_file ../data/siqa/sft-train/train-1k/llama-3-8b-instruct--choices-5--train.jsonl --eval_file ../data/siqa/sft-train/train-1k/llama-3-8b-instruct--choices-5--eval.jsonl --output_dir ../runs-sft/choices-5-02 --pad_token "<|end_of_text|>" --model_id meta-llama/Meta-Llama-3.1-8B-Instruct --eval_steps 10 --num_train_epochs 4
+accelerate launch run.py sft --train_file ../data/siqa --eval_split_size 200 --output_dir ../runs-sft/choices-5-paraphrase-01 --pad_token "<|end_of_text|>" --model_id meta-llama/Llama-3.1-8B-Instruct --eval_steps 10 --num_train_epochs 8
 ```
 
 ```

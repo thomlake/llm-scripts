@@ -93,7 +93,7 @@ class SFTConfig(Config):
     auto_find_batch_size: bool = True
     group_by_length: bool = True
     # Training -- Eval, logging, and saving
-    evaluation_strategy: str = 'steps'
+    eval_strategy: str = 'steps'
     eval_steps: int = 50
     save_strategy: str = 'steps'
     save_steps: int | None = None
