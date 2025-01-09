@@ -259,10 +259,10 @@ def main():
         print(f'trl version: {trl.__version__}')
 
     config = SFTConfig.load()
-    if not config.resume_from_checkpoint and Path(config.output_dir).exists():
-        raise ValueError(f'output_dir already exists: {config.output_dir}')
-
     if env.is_primary():
+        if not config.resume_from_checkpoint and Path(config.output_dir).exists():
+            raise ValueError(f'output_dir already exists: {config.output_dir}')
+
         print(config)
         config.dump(Path(config.output_dir, 'sft_config.json'))
 

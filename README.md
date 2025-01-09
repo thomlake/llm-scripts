@@ -91,11 +91,18 @@ print(f'{sum(v.numel() for v in tensors.values()):,d}')
 
 ```
 accelerate launch run.py sft --train_file ../data/siqa --eval_split_size 200 --output_dir ../runs-sft/choices-5-paraphrase-01 --pad_token "<|end_of_text|>" --model_id meta-llama/Llama-3.1-8B-Instruct --eval_steps 10 --num_train_epochs 8
+
+accelerate launch run.py sft --train_file ../data/siqa --eval_split_size 200 --output_dir ../runs-sft/choices-5-paraphrase--03 --pad_token "<|end_of_text|>" --model_id meta-llama/Llama-3.1-8B-Instruct --eval_steps 20 --num_train_epochs 32
 ```
 
 ```
 python run.py generate --input_file ./qampari-small.jsonl --output_dir qampari-small-output --model_id meta-llama/Llama-3.1-8B-Instruct --pad_token "<|end_of_text|>" --checkpoint_dir ../runs-sft/choices-5-01
 
 
-python run.py generate --input_file ../data/siqa/ --output_dir qampari-small-output --model_id meta-llama/Llama-3.1-8B-Instruct --pad_token "<|end_of_text|>" --checkpoint_dir ../runs-sft/choices-5-01  --max_new_tokens 1024
+python run.py generate --input_file ../data/siqa/ --output_dir ../runs-generate/ --model_id meta-llama/Llama-3.1-8B-Instruct --pad_token "<|end_of_text|>" --checkpoint_dir ../runs-sft/  --max_new_tokens 1024
+
+python run.py generate --input_file ../data/siqa/sft-eval/validation-1k/llama-3-8b-instruct.jsonl --output_dir ../runs-generate/choices-5-paraphrase--02--greedy --model_id meta-llama/Llama-3.1-8B-Instruct --pad_token "<|end_of_text|>" --checkpoint_dir ../runs-sft/choices-5-paraphrase-02/checkpoint-672  --max_new_tokens 1024
+
+
+CUDA_VISIBLE_DEVICES=2 python run.py generate --input_file ../data/siqa/sft-eval/validation-1k/llama-3-8b-instruct.jsonl --output_dir ../runs-generate/choices-5-paraphrase--01b--greedy --model_id meta-llama/Llama-3.1-8B-Instruct --pad_token "<|end_of_text|>" --checkpoint_dir ../runs-sft/choices-5-paraphrase-01--maybe-broken  --max_new_tokens 1024
 ```
