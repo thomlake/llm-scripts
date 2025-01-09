@@ -94,5 +94,8 @@ accelerate launch run.py sft --train_file ../data/siqa --eval_split_size 200 --o
 ```
 
 ```
-python run.py generate --input_file ./qampari-small.jsonl --output_dir qampari-small-output --model_id meta-llama/Meta-Llama-3.1-8B-Instruct --pad_token "<|end_of_text|>" --checkpoint_dir ../runs-sft/choices-5-01
+python run.py generate --input_file ./qampari-small.jsonl --output_dir qampari-small-output --model_id meta-llama/Llama-3.1-8B-Instruct --pad_token "<|end_of_text|>" --checkpoint_dir ../runs-sft/choices-5-01
+
+
+python run.py generate --input_file ../data/siqa/ --output_dir qampari-small-output --model_id meta-llama/Llama-3.1-8B-Instruct --pad_token "<|end_of_text|>" --checkpoint_dir ../runs-sft/choices-5-01  --max_new_tokens 1024
 ```
